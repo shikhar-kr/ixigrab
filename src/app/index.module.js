@@ -3,6 +3,7 @@
 import { config } from './index.config';
 import { xConfig } from './xconfig.config';  
 import { xSites } from './sites.config';  
+import { xCurrency } from './sites.config';  
 import { routerConfig } from './index.route';
 import { runBlock } from './index.run';
 import { MainController } from './main/main.controller';
@@ -17,6 +18,7 @@ angular.module('ixigrab', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'n
   .constant('moment', moment)
   .constant('xConfig', xConfig)
   .constant('xSites', xSites)
+  .constant('xCurrency', xCurrency)
   .config(config)
   .config(routerConfig)
   .run(runBlock)

@@ -126,3 +126,11 @@ let sites = [
 
 export var xSites = sites.filter(x=>x.active)
 						 .sort((a,b)=>(a.order-b.order));
+export var xCurrency = 'KD';
+
+/* Deals */
+export function dealsXcite() {
+  
+
+  return ;
+}
