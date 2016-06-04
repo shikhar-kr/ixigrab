@@ -1,11 +1,17 @@
 export class DealsController {
-  constructor ($log, $http, xConfig, xSites, xCurrency) {
+  constructor ($log, $http, xConfig, xSites, xCurrency, xGetDeals) {
     'ngInject';
     
     this.log = $log ;
     this.http = $http ;
     this.xSites = xSites.filter(x=>x.deals) ;
     this.XCurrency = xCurrency ;
+    this.xGetDeals = xGetDeals ;
+    this.deals = {
+
+      xcite:function(){ console.log('in xxcite');}
+
+    } ;
     this.prds = [] ; // products
     this.prdsCount = {} ;
     this.slider = {
@@ -33,30 +39,17 @@ export class DealsController {
 
   doSearch() {
 
-    let {prds,prdsCount,xSites,slider,isNumeric,http,log,xCurrency} = this ;
+    let {prds,prdsCount,xSites,slider,isNumeric,http,log,xCurrency,xGetDeals} = this ;
 
-    log.debug(xSites) ;
+    log.debug(xGetDeals) ;
 
     xSites.forEach(s=>{
-		log.debug(s) ;    	
+
+      xGetDeals[s.site](http,prds) ;
+
+      log.debug(prds);
+    	
     }) ; 
-
-  }
-
-  chkShow (s, e){
-    //console.log(s);
-    //console.log(e.target.checked) ;
-    if(e.target.checked){
-      this.prds.forEach( c => {
-        if (c.site == s && c.show === false)
-          c.show = true ;
-      });
-    } else {
-      this.prds.forEach( c => {
-        if (c.site == s && c.show === true)
-          c.show = false ;
-      });
-    }
 
   }
 

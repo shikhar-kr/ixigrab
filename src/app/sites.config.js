@@ -124,13 +124,82 @@ let sites = [
   // beraven.com
 ];
 
+let cache_req = true ; 
+
+//export var deals = {} ;
+//var xcite_data = null,
+//    xcite_ctime = null ;
+
 export var xSites = sites.filter(x=>x.active)
 						 .sort((a,b)=>(a.order-b.order));
 export var xCurrency = 'KD';
 
-/* Deals */
-export function dealsXcite() {
+export var xGetDeals = {
   
+  xcite: (http, prds)=>{
 
-  return ;
+    let s = sites.find(x=>(x.site=='xcite')) ;
+
+    let scrap = (x,prds)=>{
+      let items = $(x.body.children).find('.product-item');
+      for (let i = 0; i < items.length; i++) {
+          let prd = {
+              site: s.site,
+              product: $(items[i]).find('.product-image').attr('title'),
+          };
+          prds.push(prd);
+      }
+    };
+
+
+    http.get( s.burl + '/dailydeal/index/list/', {cache: cache_req}).
+      then( r => {
+        
+        let xcite_data = document.implementation.createHTMLDocument('xDeals_xcite');
+        xcite_data.body.innerHTML = r.data;
+        scrap(xcite_data, prds);
+    
+      });
+
+
+  },
+
+  blink: (http, prds)=>{
+
+    let s = sites.find(x=>(x.site=='blink')) ;
+
+    let scrap = (x, prds)=>{
+      let items = $(x.body.children).find('.dealcenterContainer');
+      //let prds = [];
+      for (let i = 0; i < items.length; i++) {
+          let prd = {
+              site: s.site,
+              product: $(items[i]).find('.dodProducttitle').find('a').text().trim(),
+          };
+          prds.push(prd);
+      }
+    };
+
+    http.get(s.burl + '/deals', {cache: cache_req}).
+      then( r => {
+
+        let blink_data = document.implementation.createHTMLDocument('xDeals_blink');
+        blink_data.body.innerHTML = r.data;
+        scrap(blink_data, prds);        
+
+      });
+
+  },  
+
+  ksouq: (http, prds)=>{
+    console.log(prds);
+  },  
+  dealskw: (http, prds)=>{
+    console.log(prds);
+  },  
+  sheeel: (http, prds)=>{
+    console.log(prds);
+  },
+
 }
+
