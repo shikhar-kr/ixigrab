@@ -5,16 +5,11 @@ export class DealsController {
     this.log = $log ;
     this.http = $http ;
     this.xSites = xSites.filter(x=>x.deals) ;
-    this.XCurrency = xCurrency ;
+    this.xCurrency = xCurrency ;
     this.xGetDeals = xGetDeals ;
-    this.deals = {
-
-      xcite:function(){ console.log('in xxcite');}
-
-    } ;
     this.prds = [] ; // products
     this.prdsCount = {} ;
-    this.slider = {
+/*    this.slider = {
       min: null,
       max: null,
       options: {
@@ -31,7 +26,7 @@ export class DealsController {
           });
         }
       }
-    };
+    };*/
 
     this.doSearch();
 

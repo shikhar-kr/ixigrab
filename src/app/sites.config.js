@@ -16,7 +16,7 @@ let sites = [
     order: 40,
     active: true,
     search: true,
-    deals: true,
+    deals: false,
     color: '#006fcc'
   },
   {
@@ -143,18 +143,24 @@ export var xGetDeals = {
     let scrap = (x,prds)=>{
       let items = $(x.body.children).find('.product-item');
       for (let i = 0; i < items.length; i++) {
+        try {
           let prd = {
               site: s.site,
               product: $(items[i]).find('.product-image').attr('title'),
+              href: $(items[i]).find('.product-image').attr('href').split(/[?#]/)[0],
+              image_tn: $(items[i]).find('.product-image').find('img').data('src'),
+              price: Number($(items[i]).find(' .finalprice').html().split(/ /)[0]),
+              stock: $(items[i]).find(' .out-of-stock').html() === null ? 1 : 0,
           };
           prds.push(prd);
+        } catch (e) {
+            console.log(i + $(items[i]).find('.product-image').attr('title') + e);
+        }  
       }
     };
 
-
     http.get( s.burl + '/dailydeal/index/list/', {cache: cache_req}).
       then( r => {
-        
         let xcite_data = document.implementation.createHTMLDocument('xDeals_xcite');
         xcite_data.body.innerHTML = r.data;
         scrap(xcite_data, prds);
@@ -172,17 +178,24 @@ export var xGetDeals = {
       let items = $(x.body.children).find('.dealcenterContainer');
       //let prds = [];
       for (let i = 0; i < items.length; i++) {
+        try {
           let prd = {
               site: s.site,
               product: $(items[i]).find('.dodProducttitle').find('a').text().trim(),
+              href: s.burl + $(items[i]).children('a').attr('href').split(/[?#]/)[0],
+              image_tn: s.burl + $(items[i]).children('a').children('img').attr('src'),
+              price: Number($(items[i]).find(' .price').html().split(/ /)[0]),
+              stock: $(items[i]).find(' .outStock').html() === null ? 1 : 0,
           };
           prds.push(prd);
+        } catch (e) {
+          console.log(i + $(items[i]).find('.dodProducttitle').find('a').text().trim() + e);
+        }
       }
     };
 
     http.get(s.burl + '/deals', {cache: cache_req}).
       then( r => {
-
         let blink_data = document.implementation.createHTMLDocument('xDeals_blink');
         blink_data.body.innerHTML = r.data;
         scrap(blink_data, prds);        
@@ -191,14 +204,63 @@ export var xGetDeals = {
 
   },  
 
-  ksouq: (http, prds)=>{
-    console.log(prds);
-  },  
   dealskw: (http, prds)=>{
-    console.log(prds);
+
+    let s = sites.find(x=>(x.site=='dealskw')) ;
+
+    let scrap = (x, prds)=>{
+      try {
+        let prd = {
+            site: s.site,
+            product: $(x.body.children).find('.fullWhiteWidget .productDescription h3').text().trim(),
+            href: s.burl,
+            image_tn: s.burl + '/' + $(x.body.children).find('.fullWhiteWidget #zoom1 img').attr('src'),
+            price: Number($(x.body.children).find('.fullWhiteWidget .cost').text().trim()),
+            stock: 1,
+        };
+        prds.push(prd);
+      } catch (e) {
+        console.log(i + $(x.body.children).find('.fullWhiteWidget .productDescription h3').text().trim() + e);
+      }
+
+    };
+
+    http.get(s.burl, {cache: cache_req}).
+      then( r => {
+        let d = document.implementation.createHTMLDocument('xDeals_dealskw');
+        d.body.innerHTML = r.data;
+        scrap(d, prds);        
+
+      });
   },  
+
   sheeel: (http, prds)=>{
-    console.log(prds);
+    let s = sites.find(x=>(x.site=='sheeel')) ;
+
+    let scrap = (x, prds)=>{
+      try {
+        let prd = {
+            site: s.site,
+            product: $(x.body.children).find('.product-view .product-name').text().trim(),
+            href: s.burl,
+            image_tn: $(x.body.children).find('.product-view .product-img-box img').first().attr('src'),
+            price: Number($(x.body.children).find('.product-view .price').first().text().replace(/KD/i, '')),
+            stock: 1,
+        };
+        prds.push(prd);
+      } catch (e) {
+        console.log(i + $(x.body.children).find('.product-view .product-name').text().trim() + e);
+      }
+
+    };
+
+    http.get(s.burl, {cache: cache_req}).
+      then( r => {
+        let d = document.implementation.createHTMLDocument('xDeals_sheeel');
+        d.body.innerHTML = r.data;
+        scrap(d, prds);        
+
+      });
   },
 
 }
