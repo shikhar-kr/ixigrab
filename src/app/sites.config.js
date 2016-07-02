@@ -151,6 +151,7 @@ export var xGetDeals = {
               image_tn: $(items[i]).find('.product-image').find('img').data('src'),
               price: Number($(items[i]).find(' .finalprice').html().split(/ /)[0]),
               stock: $(items[i]).find(' .out-of-stock').html() === null ? 1 : 0,
+              show: true
           };
           prds.push(prd);
         } catch (e) {
@@ -186,6 +187,7 @@ export var xGetDeals = {
               image_tn: s.burl + $(items[i]).children('a').children('img').attr('src'),
               price: Number($(items[i]).find(' .price').html().split(/ /)[0]),
               stock: $(items[i]).find(' .outStock').html() === null ? 1 : 0,
+              show: true
           };
           prds.push(prd);
         } catch (e) {
@@ -217,6 +219,7 @@ export var xGetDeals = {
             image_tn: s.burl + '/' + $(x.body.children).find('.fullWhiteWidget #zoom1 img').attr('src'),
             price: Number($(x.body.children).find('.fullWhiteWidget .cost').text().trim()),
             stock: 1,
+            show: true
         };
         prds.push(prd);
       } catch (e) {
@@ -246,6 +249,7 @@ export var xGetDeals = {
             image_tn: $(x.body.children).find('.product-view .product-img-box img').first().attr('src'),
             price: Number($(x.body.children).find('.product-view .price').first().text().replace(/KD/i, '')),
             stock: 1,
+            show: true
         };
         prds.push(prd);
       } catch (e) {

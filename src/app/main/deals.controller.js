@@ -9,6 +9,7 @@ export class DealsController {
     this.xGetDeals = xGetDeals ;
     this.prds = [] ; // products
     this.prdsCount = {} ;
+    this.bgColor = {};
 /*    this.slider = {
       min: null,
       max: null,
@@ -28,6 +29,10 @@ export class DealsController {
       }
     };*/
 
+    this.xSites.forEach(x=>{
+      this.bgColor[x.site] = x.color ;
+    });
+    
     this.doSearch();
 
   }
@@ -36,13 +41,13 @@ export class DealsController {
 
     let {prds,prdsCount,xSites,slider,isNumeric,http,log,xCurrency,xGetDeals} = this ;
 
-    log.debug(xGetDeals) ;
+    //log.debug(xGetDeals) ;
 
     xSites.forEach(s=>{
 
       xGetDeals[s.site](http,prds) ;
 
-      log.debug(prds);
+      //log.debug(prds);
     	
     }) ; 
 
@@ -51,6 +56,21 @@ export class DealsController {
   isNumeric (n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
+
+  chkShow (s, e){
+    if(e.target.checked){
+      this.prds.forEach( c => {
+        if (c.site == s && c.show === false)
+          c.show = true ;
+      });
+    } else {
+      this.prds.forEach( c => {
+        if (c.site == s && c.show === true)
+          c.show = false ;
+      });
+    }
+
+  }  
 
 
   

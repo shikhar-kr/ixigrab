@@ -22,7 +22,7 @@
 <h4>Deals Found:{{search.prds.length}}</h4>
 <div class="row">
   <div class="list-group list-group-horizontal">
-      <span ng-repeat="s in search.sites" href="#" class="list-group-item" style="background-color: {{search.xSites[s.site].color}}; ">
+      <span ng-repeat="s in search.xSites | orderBy:'site'" href="#" class="list-group-item" style="background-color: {{s.color}}; ">
         <label><input type="checkbox" ng-click="search.chkShow(s.site,$event)" checked>{{s.site}} <span class="badge">{{search.prdsCount[s.site]}}</span> </label>
       </span>
   </div>
@@ -30,7 +30,7 @@
 </div>
 <div class="flex-container" ng-if="search.prds.length">
 
-    <div class="thumbnail" style="border-color: {{search.sites[p.site].color}}; border-width: 3px;" ng-repeat="p in search.prds | orderBy:'price' ">
+    <div class="thumbnail" style="border-color: {{search.bgColor[p.site]}}; border-width: 3px;" ng-repeat="p in search.prds | orderBy:'price' " ng-if="p.show">
 
             <a target="_blank" href="{{p.href}}">
                 <img ng-src="{{p.image_tn}}" alt="">
