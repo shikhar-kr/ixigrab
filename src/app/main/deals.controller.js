@@ -8,7 +8,6 @@ export class DealsController {
     this.xCurrency = xCurrency ;
     this.xGetDeals = xGetDeals ;
     this.prds = [] ; // products
-    this.prdsCount = {} ;
     this.bgColor = {};
 /*    this.slider = {
       min: null,
@@ -70,6 +69,10 @@ export class DealsController {
       });
     }
 
+  }
+
+  getCount(s){
+    return this.prds.filter(x=>x.site==s).length ;
   }  
 
 

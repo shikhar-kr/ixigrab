@@ -23,7 +23,7 @@
 <div class="row">
   <div class="list-group list-group-horizontal">
       <span ng-repeat="s in search.xSites | orderBy:'site'" href="#" class="list-group-item" style="background-color: {{s.color}}; ">
-        <label><input type="checkbox" ng-click="search.chkShow(s.site,$event)" checked>{{s.site}} <span class="badge">{{search.prdsCount[s.site]}}</span> </label>
+        <label><input type="checkbox" ng-click="search.chkShow(s.site,$event)" checked>{{s.site}} <span class="badge">{{search.getCount(s.site)}}</span> </label>
       </span>
   </div>
 
