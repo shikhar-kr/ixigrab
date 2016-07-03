@@ -130,17 +130,36 @@ let cache_req = true ;
 //var xcite_data = null,
 //    xcite_ctime = null ;
 
+let setMinMax = function(slider, prd){
+  
+  if(slider.min == null || slider.min == 0){
+    slider.min = prd.price ; 
+    slider.options.floor = prd.price ;
+  } else if (prd.price < slider.min){
+    slider.min = prd.price ;
+    slider.options.floor = prd.price ;
+  }  
+
+  if(slider.max == null){
+    slider.max = prd.price ; 
+    slider.options.ceil = prd.price ; 
+  } else if (prd.price > slider.max){
+    slider.max = prd.price ;
+    slider.options.ceil = prd.price ;
+  }
+}; 
+
 export var xSites = sites.filter(x=>x.active)
 						 .sort((a,b)=>(a.order-b.order));
 export var xCurrency = 'KD';
 
 export var xGetDeals = {
   
-  xcite: (http, prds)=>{
+  xcite: (http, prds, slider)=>{
 
     let s = sites.find(x=>(x.site=='xcite')) ;
 
-    let scrap = (x,prds)=>{
+    let scrap = (x)=>{
       let items = $(x.body.children).find('.product-item');
       for (let i = 0; i < items.length; i++) {
         try {
@@ -154,6 +173,8 @@ export var xGetDeals = {
               show: true
           };
           prds.push(prd);
+          setMinMax(slider,prd);
+          
         } catch (e) {
             console.log(i + $(items[i]).find('.product-image').attr('title') + e);
         }  
@@ -164,18 +185,18 @@ export var xGetDeals = {
       then( r => {
         let xcite_data = document.implementation.createHTMLDocument('xDeals_xcite');
         xcite_data.body.innerHTML = r.data;
-        scrap(xcite_data, prds);
+        scrap(xcite_data);
     
       });
 
 
   },
 
-  blink: (http, prds)=>{
+  blink: (http, prds, slider)=>{
 
     let s = sites.find(x=>(x.site=='blink')) ;
 
-    let scrap = (x, prds)=>{
+    let scrap = (x)=>{
       let items = $(x.body.children).find('.dealcenterContainer');
       //let prds = [];
       for (let i = 0; i < items.length; i++) {
@@ -190,6 +211,7 @@ export var xGetDeals = {
               show: true
           };
           prds.push(prd);
+          setMinMax(slider,prd);
         } catch (e) {
           console.log(i + $(items[i]).find('.dodProducttitle').find('a').text().trim() + e);
         }
@@ -200,17 +222,17 @@ export var xGetDeals = {
       then( r => {
         let blink_data = document.implementation.createHTMLDocument('xDeals_blink');
         blink_data.body.innerHTML = r.data;
-        scrap(blink_data, prds);        
+        scrap(blink_data);        
 
       });
 
   },  
 
-  dealskw: (http, prds)=>{
+  dealskw: (http, prds, slider)=>{
 
     let s = sites.find(x=>(x.site=='dealskw')) ;
 
-    let scrap = (x, prds)=>{
+    let scrap = (x)=>{
       try {
         let prd = {
             site: s.site,
@@ -222,6 +244,7 @@ export var xGetDeals = {
             show: true
         };
         prds.push(prd);
+        setMinMax(slider,prd);
       } catch (e) {
         console.log(i + $(x.body.children).find('.fullWhiteWidget .productDescription h3').text().trim() + e);
       }
@@ -232,15 +255,15 @@ export var xGetDeals = {
       then( r => {
         let d = document.implementation.createHTMLDocument('xDeals_dealskw');
         d.body.innerHTML = r.data;
-        scrap(d, prds);        
+        scrap(d);        
 
       });
   },  
 
-  sheeel: (http, prds)=>{
+  sheeel: (http, prds, slider)=>{
     let s = sites.find(x=>(x.site=='sheeel')) ;
 
-    let scrap = (x, prds)=>{
+    let scrap = (x)=>{
       try {
         let prd = {
             site: s.site,
@@ -252,6 +275,7 @@ export var xGetDeals = {
             show: true
         };
         prds.push(prd);
+        setMinMax(slider,prd);
       } catch (e) {
         console.log(i + $(x.body.children).find('.product-view .product-name').text().trim() + e);
       }
@@ -262,7 +286,7 @@ export var xGetDeals = {
       then( r => {
         let d = document.implementation.createHTMLDocument('xDeals_sheeel');
         d.body.innerHTML = r.data;
-        scrap(d, prds);        
+        scrap(d);        
 
       });
   },

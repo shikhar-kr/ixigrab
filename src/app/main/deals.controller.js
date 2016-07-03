@@ -9,12 +9,12 @@ export class DealsController {
     this.xGetDeals = xGetDeals ;
     this.prds = [] ; // products
     this.bgColor = {};
-/*    this.slider = {
+    this.slider = {
       min: null,
       max: null,
       options: {
-        floor: 0,
-        ceil: null,
+        floor: null,
+        ceil: null ,
         translate: v => xCurrency + v,        
         onChange: (sliderId, modelValue, highValue) => {
           this.prds.map( c => {
@@ -26,7 +26,7 @@ export class DealsController {
           });
         }
       }
-    };*/
+    };
 
     this.xSites.forEach(x=>{
       this.bgColor[x.site] = x.color ;
@@ -44,7 +44,7 @@ export class DealsController {
 
     xSites.forEach(s=>{
 
-      xGetDeals[s.site](http,prds) ;
+      xGetDeals[s.site](http,prds,slider) ;
 
       //log.debug(prds);
     	
@@ -74,6 +74,14 @@ export class DealsController {
   getCount(s){
     return this.prds.filter(x=>x.site==s).length ;
   }  
+  getMax(){
+    return this.prds.reduce((p,c)=>(p.price>=c.price?p.price:c.price)) ;
+  }  
+  getMin(){
+    console.log(this.prds.reduce((p,c)=>(p.price<=c.price?p.price:c.price))) ;
+    return this.prds.reduce((p,c)=>(p.price<=c.price?p.price:c.price)) ;
+  }  
+
 
 
   

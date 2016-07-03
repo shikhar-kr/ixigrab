@@ -19,7 +19,9 @@
  
   </div>
 </nav>
+
 <h4>Deals Found:{{search.prds.length}}</h4>
+
 <div class="row">
   <div class="list-group list-group-horizontal">
       <span ng-repeat="s in search.xSites | orderBy:'site'" href="#" class="list-group-item" style="background-color: {{s.color}}; ">
@@ -28,9 +30,23 @@
   </div>
 
 </div>
+
+<div class="row">
+    <div class="col-md-8">
+      <rzslider rz-slider-model="search.slider.min"
+              rz-slider-high="search.slider.max"
+              rz-slider-options="search.slider.options"></rzslider>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <input type="text" class="form-control" id="sq" placeholder="type to Filter" name="sq" ng-model="search.sq">
+      </div>
+    </div>
+</div>
+
 <div class="flex-container" ng-if="search.prds.length">
 
-    <div class="thumbnail" style="border-color: {{search.bgColor[p.site]}}; border-width: 3px;" ng-repeat="p in search.prds | orderBy:'price' " ng-if="p.show">
+    <div class="thumbnail" style="border-color: {{search.bgColor[p.site]}}; border-width: 3px;" ng-repeat="p in search.prds | orderBy:'price' | filter:search.sq" ng-if="p.show">
 
             <a target="_blank" href="{{p.href}}">
                 <img ng-src="{{p.image_tn}}" alt="">
@@ -38,7 +54,7 @@
 
             <div class="price"><p><a target="_blank" ng-href="{{p.href}}">{{p.product}}</a></p>
             <p>{{p.price|currency:"KD":3}}<span class="pull-right">{{p.site}}</span></p></div>
-
+ 
     </div>
 </div>
 <div ng-if="search.prds.length == 0">
