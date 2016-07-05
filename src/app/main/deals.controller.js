@@ -1,5 +1,5 @@
 export class DealsController {
-  constructor ($log, $http, xConfig, xSites, xCurrency, xGetDeals) {
+  constructor ($log, $http, xConfig, xSites, xCurrency, xDecimals, xGetDeals) {
     'ngInject';
     
     this.log = $log ;

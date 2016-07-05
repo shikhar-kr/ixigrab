@@ -152,6 +152,7 @@ let setMinMax = function(slider, prd){
 export var xSites = sites.filter(x=>x.active)
 						 .sort((a,b)=>(a.order-b.order));
 export var xCurrency = 'KD';
+export var xDecimals = 3;
 
 export var xGetDeals = {
   

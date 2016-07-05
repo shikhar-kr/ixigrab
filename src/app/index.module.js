@@ -4,6 +4,7 @@ import { config } from './index.config';
 import { xConfig } from './xconfig.config';  
 import { xSites } from './sites.config';  
 import { xCurrency } from './sites.config';  
+import { xDecimals } from './sites.config';  
 import { xGetDeals } from './sites.config';  
 import { routerConfig } from './index.route';
 import { runBlock } from './index.run';
@@ -20,6 +21,7 @@ angular.module('ixigrab', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'n
   .constant('xConfig', xConfig)
   .constant('xSites', xSites)
   .constant('xCurrency', xCurrency)
+  .constant('xDecimals', xDecimals)
   .constant('xGetDeals', xGetDeals)
   .config(config)
   .config(routerConfig)
