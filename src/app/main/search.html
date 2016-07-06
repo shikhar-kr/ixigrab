@@ -1,0 +1,64 @@
+<div class="container-fluid">
+
+<nav class="navbar navbar-static-top navbar-inverse">
+  <div class="container-fluid">
+    <!-- Logo -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#/">iXigrab</a>
+    
+      <form role="search" class="navbar-form navbar-left" id="" ng-submit="search.doSearch(IXIAPI_URL, $http, $location)" novalidate>
+            <div class="input-group" id="div-q">
+              <input type="text" class="form-control" id="q" placeholder="Search Kuwait" name="q" ng-model="search.q" ng-required="true">
+            
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+              </div> 
+            </div>
+      </form>
+    </div>
+ 
+  </div>
+</nav>
+
+<h4>Products Found:{{search.prds.length}}</h4>
+
+<div class="row">
+  <div class="list-group list-group-horizontal">
+      <span ng-repeat="s in search.xSites | orderBy:'site'" href="#" class="list-group-item" style="background-color: {{s.color}}; ">
+        <label><input type="checkbox" ng-click="search.chkShow(s.site,$event)" checked>{{s.site}} <span class="badge">{{search.getCount(s.site)}}</span> </label>
+      </span>
+  </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+      <rzslider rz-slider-model="search.slider.min"
+              rz-slider-high="search.slider.max"
+              rz-slider-options="search.slider.options"></rzslider>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <input type="text" class="form-control" id="sq" placeholder="type to Filter" name="sq" ng-model="search.sq">
+      </div>
+    </div>
+</div>
+
+<div class="flex-container" ng-if="search.prds.length">
+
+    <div class="thumbnail" style="border-color: {{search.bgColor[p.site]}}; border-width: 3px;" ng-repeat="p in search.prds | orderBy:'price' | filter:search.sq" ng-if="p.show">
+
+            <a target="_blank" href="{{p.href}}">
+                <img ng-src="{{p.image_tn}}" alt="">
+            </a>
+
+            <div class="price"><p><a target="_blank" ng-href="{{p.href}}">{{p.product}}</a></p>
+            <p>{{p.price|currency:search.xCurrency:search.xDecimals}}<span class="pull-right">{{p.site}}</span></p></div>
+ 
+    </div>
+</div>
+<div ng-if="search.prds.length == 0">
+    Grabbing / No product found
+</div>
+
+</div>

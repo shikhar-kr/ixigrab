@@ -10,6 +10,11 @@ export function routerConfig ($routeProvider) {
       templateUrl: 'app/main/deals.html',
       controller: 'DealsController',
       controllerAs: 'search'
+    })    
+    .when('/search/:q', {
+      templateUrl: 'app/main/search.html',
+      controller: 'SearchController',
+      controllerAs: 'search'
     })
     .otherwise({
       redirectTo: '/'

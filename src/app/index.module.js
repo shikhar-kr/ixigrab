@@ -6,10 +6,12 @@ import { xSites } from './sites.config';
 import { xCurrency } from './sites.config';  
 import { xDecimals } from './sites.config';  
 import { xGetDeals } from './sites.config';  
+import { xSearch } from './sites.config';  
 import { routerConfig } from './index.route';
 import { runBlock } from './index.run';
 import { MainController } from './main/main.controller';
 import { DealsController } from './main/deals.controller';
+import { SearchController } from './main/search.controller';
 import { GithubContributorService } from '../app/components/githubContributor/githubContributor.service';
 import { WebDevTecService } from '../app/components/webDevTec/webDevTec.service';
 import { NavbarDirective } from '../app/components/navbar/navbar.directive';
@@ -23,6 +25,7 @@ angular.module('ixigrab', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'n
   .constant('xCurrency', xCurrency)
   .constant('xDecimals', xDecimals)
   .constant('xGetDeals', xGetDeals)
+  .constant('xSearch', xSearch)
   .config(config)
   .config(routerConfig)
   .run(runBlock)
@@ -30,5 +33,6 @@ angular.module('ixigrab', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'n
   .service('webDevTec', WebDevTecService)
   .controller('MainController', MainController)
   .controller('DealsController', DealsController)
+  .controller('SearchController', SearchController)
   .directive('acmeNavbar', NavbarDirective)
   .directive('acmeMalarkey', MalarkeyDirective);
