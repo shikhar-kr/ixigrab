@@ -149,7 +149,7 @@ let setMinMax = function(slider, prd){
   }
 }; 
 
-let scrap_xcite = function(x,s,prds,slider){
+let scrape_xcite = function(x,s,prds,slider){
   let items = $(x.body.children).find('.product-item');
   for (let i = 0; i < items.length; i++) {
     try {
@@ -186,7 +186,7 @@ export var xGetDeals = {
       then( r => {
         let d = document.implementation.createHTMLDocument('xDeals'+s.site);
         d.body.innerHTML = r.data;
-        scrap_xcite(d,s,prds,slider);
+        scrape_xcite(d,s,prds,slider);
     
       });
 
@@ -197,7 +197,7 @@ export var xGetDeals = {
 
     let s = sites.find(x=>(x.site=='blink')) ;
 
-    let scrap = (x)=>{
+    let scrape = (x)=>{
       let items = $(x.body.children).find('.dealcenterContainer');
       //let prds = [];
       for (let i = 0; i < items.length; i++) {
@@ -223,7 +223,7 @@ export var xGetDeals = {
       then( r => {
         let blink_data = document.implementation.createHTMLDocument('xDeals_blink');
         blink_data.body.innerHTML = r.data;
-        scrap(blink_data);        
+        scrape(blink_data);        
 
       });
 
@@ -233,7 +233,7 @@ export var xGetDeals = {
 
     let s = sites.find(x=>(x.site=='dealskw')) ;
 
-    let scrap = (x)=>{
+    let scrape = (x)=>{
       try {
         let prd = {
             site: s.site,
@@ -256,7 +256,7 @@ export var xGetDeals = {
       then( r => {
         let d = document.implementation.createHTMLDocument('xDeals_dealskw');
         d.body.innerHTML = r.data;
-        scrap(d);        
+        scrape(d);        
 
       });
   },  
@@ -264,7 +264,7 @@ export var xGetDeals = {
   sheeel: (http, prds, slider)=>{
     let s = sites.find(x=>(x.site=='sheeel')) ;
 
-    let scrap = (x)=>{
+    let scrape = (x)=>{
       try {
         let prd = {
             site: s.site,
@@ -287,7 +287,7 @@ export var xGetDeals = {
       then( r => {
         let d = document.implementation.createHTMLDocument('xDeals_sheeel');
         d.body.innerHTML = r.data;
-        scrap(d);        
+        scrape(d);        
 
       });
   },
@@ -304,7 +304,7 @@ export var xSearch = {
       then( r => {
         let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
         d.body.innerHTML = r.data;
-        scrap_xcite(d,s,prds,slider);
+        scrape_xcite(d,s,prds,slider);
     
       });
 
@@ -315,7 +315,7 @@ export var xSearch = {
 
     let s = sites.find(x=>(x.site=='blink')) ;
 
-    let scrap = (x)=>{
+    let scrape = (x)=>{
       let items = $(x.body.children).find('.innerPlist li');
       //let prds = [];
       for (let i = 0; i < items.length; i++) {
@@ -341,7 +341,7 @@ export var xSearch = {
       then( r => {
         let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
         d.body.innerHTML = r.data;
-        scrap(d);       
+        scrape(d);       
 
       });
 
@@ -351,7 +351,7 @@ export var xSearch = {
 
     let s = sites.find(x=>(x.site=='dealskw')) ;
 
-    let scrap = (x)=>{
+    let scrape = (x)=>{
       let items = $(x.body.children).find('li');
       for (let i = 0; i < items.length; i++) {
         try {
@@ -377,41 +377,12 @@ export var xSearch = {
       then( r => {
         let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
         d.body.innerHTML = r.data;
-        scrap(d);         
+        scrape(d);         
 
       });
   },  
 
-  sheeel: (http, prds, slider)=>{
-    let s = sites.find(x=>(x.site=='sheeel')) ;
 
-    let scrap = (x)=>{
-      try {
-        let prd = {
-            site: s.site,
-            product: $(x.body.children).find('.product-view .product-name').text().trim(),
-            href: s.burl,
-            image_tn: $(x.body.children).find('.product-view .product-img-box img').first().attr('src'),
-            price: Number($(x.body.children).find('.product-view .price').first().text().replace(/KD/i, '')),
-            stock: 1,
-            show: true
-        };
-        prds.push(prd);
-        setMinMax(slider,prd);
-      } catch (e) {
-        console.log(i + $(x.body.children).find('.product-view .product-name').text().trim() + e);
-      }
-
-    };
-
-    http.get(s.burl, {cache: cache_req}).
-      then( r => {
-        let d = document.implementation.createHTMLDocument('xDeals_sheeel');
-        d.body.innerHTML = r.data;
-        scrap(d);        
-
-      });
-  },
 
 }
 
