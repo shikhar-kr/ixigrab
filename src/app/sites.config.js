@@ -15,7 +15,7 @@ let sites = [
     burl: 'http://kuwait.souq.com',
     order: 40,
     active: true,
-    search: false,
+    search: true,
     deals: false,
     color: '#006fcc'
   },
@@ -25,7 +25,7 @@ let sites = [
     burl: 'http://www.mrbabu.com',
     order: 30,
     active: true,
-    search: false,
+    search: true,
     deals:false,
     color: '#22798f'
   },
@@ -35,7 +35,7 @@ let sites = [
     burl: 'https://www.ubuy.com.kw',
     order: 50,
     active: true,
-    search: false,
+    search: true,
     deals:false,
     color: '#F9B223'
   },
@@ -55,7 +55,7 @@ let sites = [
     burl: 'http://www.taw9eel.com',
     order: 60,
     active: true,
-    search: false,
+    search: true,
     deals: false,
     color: '#E85F09'
   },
@@ -374,6 +374,145 @@ export var xSearch = {
     };
 
     http.get(s.burl, {cache: cache_req}).
+      then( r => {
+        let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
+        d.body.innerHTML = r.data;
+        scrape(d);         
+
+      });
+  },  
+
+  ksouq: (http, prds, slider, q)=>{
+
+    let s = sites.find(x=>(x.site=='ksouq')) ;
+
+    let scrape = (x)=>{
+      let items = $(x.body.children).find('.placard');
+      for (let i = 0; i < items.length; i++) {
+        try {
+          let prd = {
+              site: s.site,
+              product: $(items[i]).find('.itemLink').attr('title').trim(),
+              href: $(items[i]).find('.itemLink').attr('href').split(/[?#]/)[0],
+              image_tn: $(items[i]).find('img').attr('src'),
+              price: Number($(items[i]).find('.is').html().split(/&/)[0].trim()),
+              stock: 1,
+              show: true
+          };
+          prds.push(prd);
+          setMinMax(slider,prd);
+        } catch (e) {
+          console.log(i + $(items[i]).find('.itemLink').attr('title').trim() + e);
+        }
+      }
+
+    };
+
+    http.get(s.burl + '/kw-en/' + q + '/s/', {cache: cache_req}).
+      then( r => {
+        let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
+        d.body.innerHTML = r.data;
+        scrape(d);         
+
+      });
+  },  
+
+  mrbabu: (http, prds, slider, q)=>{
+
+    let s = sites.find(x=>(x.site=='mrbabu')) ;
+
+    let scrape = (x)=>{
+      let items = $(x.body.children).find('.ty-grid-list__item');
+      for (let i = 0; i < items.length; i++) {
+        try {
+          let prd = {
+              site: s.site,
+              product: $(items[i]).find('.product-title').attr('title'),
+              href: $(items[i]).find('.product-title').attr('href').split(/[?#]/)[0],
+              image_tn: $(items[i]).find('.ty-pict').attr('src'),
+              price: Number($(items[i]).find('.ty-price').children('span').eq(1).html().trim()),
+              stock: 1,
+              show: true
+          };
+          prds.push(prd);
+          setMinMax(slider,prd);
+        } catch (e) {
+          console.log(i + $(items[i]).find('.product-title').attr('title') + e);
+        }
+      }
+
+    };
+
+    http.get(s.burl + '/?subcats=Y&status=A&pshort=Y&pfull=Y&pname=Y&pkeywords=Y&search_performed=Y&searchid=All&sort_by=null&sort_order=asc&q='+ q +'&dispatch=products.search&items_per_page=16', {cache: cache_req}).
+      then( r => {
+        let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
+        d.body.innerHTML = r.data;
+        scrape(d);         
+
+      });
+  },  
+
+  ubuy: (http, prds, slider, q)=>{
+
+    let s = sites.find(x=>(x.site=='ubuy')) ;
+
+    let scrape = (x)=>{
+      let items = $(x.body.children).find('.products-grid .item');
+      for (let i = 0; i < items.length; i++) {
+        try {
+          let prd = {
+              site: s.site,
+              product: $(items[i]).find('.product-image').attr('title'),
+              href: $(items[i]).find('.product-image').attr('href').split(/[?#]/)[0],
+              image_tn: $(items[i]).find('.product-image').find('img').attr('src'),
+              price: Number($(items[i]).find('.new-price').children('.price').find('.price').html().split(/</)[0].trim()),
+              stock: 1,
+              show: true
+          };
+          prds.push(prd);
+          setMinMax(slider,prd);
+        } catch (e) {
+          console.log(i + $(items[i]).find('.product-image').attr('title') + e);
+        }
+      }
+
+    };
+
+    http.get(s.burl + '/catalogsearch/result/?cat=&q=' + q, {cache: cache_req}).
+      then( r => {
+        let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
+        d.body.innerHTML = r.data;
+        scrape(d);         
+
+      });
+  },  
+  taw9eel: (http, prds, slider, q)=>{
+
+    let s = sites.find(x=>(x.site=='taw9eel')) ;
+
+    let scrape = (x)=>{
+      let items = $(x.body.children).find('.products-grid .item');
+      for (let i = 0; i < items.length; i++) {
+        try {
+          let prd = {
+              site: s.site,
+              product: $(items[i]).find('.product-image').children('a').attr('title'),
+              href: $(items[i]).find('.product-image').children('a').attr('href').split(/[?#]/)[0],
+              image_tn: $(items[i]).find('.product-image').find('img').data('echo'),
+              price: Number($(items[i]).find('.price').html().split(/D/)[1].trim()),
+              stock: 1,
+              show: true
+          };
+          prds.push(prd);
+          setMinMax(slider,prd);
+        } catch (e) {
+          console.log(i + $(items[i]).find('.product-image').children('a').attr('title') + e);
+        }
+      }
+
+    };
+
+    http.get(s.burl + '/en/catalogsearch/result/?q=' + q, {cache: cache_req}).
       then( r => {
         let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
         d.body.innerHTML = r.data;
