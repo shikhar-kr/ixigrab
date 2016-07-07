@@ -5,7 +5,7 @@ let sites = [
     burl : 'http://www.blink.com.kw',
     order: 20,
     active: true,
-    search: false,
+    search: true,
     deals: true,
     color: '#fff203'
   },
@@ -95,7 +95,7 @@ let sites = [
     burl: 'http://www.deals.com.kw',
     order: 90,
     active: true,
-    search: false,
+    search: true,
     deals: true,
     color: '#fe57a1'
   },
@@ -311,18 +311,18 @@ export var xSearch = {
 
   },
 
-  blink: (http, prds, slider)=>{
+  blink: (http, prds, slider, q)=>{
 
     let s = sites.find(x=>(x.site=='blink')) ;
 
     let scrap = (x)=>{
-      let items = $(x.body.children).find('.dealcenterContainer');
+      let items = $(x.body.children).find('.innerPlist li');
       //let prds = [];
       for (let i = 0; i < items.length; i++) {
         try {
           let prd = {
               site: s.site,
-              product: $(items[i]).find('.dodProducttitle').find('a').text().trim(),
+              product: $(items[i]).children('a').children('img').attr('alt'),
               href: s.burl + $(items[i]).children('a').attr('href').split(/[?#]/)[0],
               image_tn: s.burl + $(items[i]).children('a').children('img').attr('src'),
               price: Number($(items[i]).find(' .price').html().split(/ /)[0]),
@@ -332,49 +332,52 @@ export var xSearch = {
           prds.push(prd);
           setMinMax(slider,prd);
         } catch (e) {
-          console.log(i + $(items[i]).find('.dodProducttitle').find('a').text().trim() + e);
+          console.log(i + $(items[i]).children('a').children('img').attr('alt') + e);
         }
       }
     };
 
-    http.get(s.burl + '/deals', {cache: cache_req}).
+    http.get(s.burl + '/search.aspx?text='+ q + '&searchfor=all', {cache: cache_req}).
       then( r => {
-        let blink_data = document.implementation.createHTMLDocument('xDeals_blink');
-        blink_data.body.innerHTML = r.data;
-        scrap(blink_data);        
+        let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
+        d.body.innerHTML = r.data;
+        scrap(d);       
 
       });
 
   },  
 
-  dealskw: (http, prds, slider)=>{
+  dealskw: (http, prds, slider, q)=>{
 
     let s = sites.find(x=>(x.site=='dealskw')) ;
 
     let scrap = (x)=>{
-      try {
-        let prd = {
-            site: s.site,
-            product: $(x.body.children).find('.fullWhiteWidget .productDescription h3').text().trim(),
-            href: s.burl,
-            image_tn: s.burl + '/' + $(x.body.children).find('.fullWhiteWidget #zoom1 img').attr('src'),
-            price: Number($(x.body.children).find('.fullWhiteWidget .cost').text().trim()),
-            stock: 1,
-            show: true
-        };
-        prds.push(prd);
-        setMinMax(slider,prd);
-      } catch (e) {
-        console.log(i + $(x.body.children).find('.fullWhiteWidget .productDescription h3').text().trim() + e);
+      let items = $(x.body.children).find('li');
+      for (let i = 0; i < items.length; i++) {
+        try {
+          let prd = {
+              site: s.site,
+              product: $(items[i]).find('.title').children('a').attr('title'),
+              href: s.burl + $(items[i]).find('a').attr('href').split(/[?#]/)[0],
+              image_tn: s.burl + $(items[i]).find('img').attr('src'),
+              price: Number($(items[i]).find('.cost:not(.discount)').find('.productCost ').html().trim().split(/ /)[0].trim()),
+              stock: 1,
+              show: true
+          };
+          prds.push(prd);
+          setMinMax(slider,prd);
+        } catch (e) {
+          console.log(i + $(items[i]).find('.title').children('a').attr('title') + e);
+        }
       }
 
     };
 
     http.get(s.burl, {cache: cache_req}).
       then( r => {
-        let d = document.implementation.createHTMLDocument('xDeals_dealskw');
+        let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
         d.body.innerHTML = r.data;
-        scrap(d);        
+        scrap(d);         
 
       });
   },  

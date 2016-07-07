@@ -42,9 +42,9 @@ export class SearchController {
   doSearch() {
 
     let {prds,prdsCount,xSites,slider,http,log,xCurrency,xSearch,q,location} = this ;
-    log.debug(xSites);
+    
     xSites.forEach(s=>{
-      log.debug(s.site);
+      //log.debug(s.site);
       xSearch[s.site](http,prds,slider,q) ;
 
       
