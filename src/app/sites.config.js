@@ -75,7 +75,7 @@ let sites = [
     burl: 'http://gamesq8.com',
     order: 80,
     active: true,
-    search: false,
+    search: true,
     deals: false,
     color: '#f47b01'
   },
@@ -486,6 +486,7 @@ export var xSearch = {
 
       });
   },  
+
   taw9eel: (http, prds, slider, q)=>{
 
     let s = sites.find(x=>(x.site=='taw9eel')) ;
@@ -520,6 +521,147 @@ export var xSearch = {
 
       });
   },  
+
+  cavaraty: (http, prds, slider, q)=>{
+
+    let s = sites.find(x=>(x.site=='cavaraty')) ;
+
+    let scrape = (x)=>{
+      let items = $(x.body.children).find('td');
+      for (let i = 0; i < items.length; i++) {
+        try {
+          let prd = {
+              site: s.site,
+              product: $(items[i]).find('a').attr('alt'),
+              href: s.burl + $(items[i]).find('a').attr('href').split(/[?#]/)[0],
+              image_tn: s.burl + $(items[i]).find('a').attr('src'),
+              price: Number($(items[i]).find('.green').html().split(/KD/)[1].trim().split(/ /)[0].trim()),
+              stock: 1,
+              show: true
+          };
+          prds.push(prd);
+          setMinMax(slider,prd);
+        } catch (e) {
+          console.log(i + $(items[i]).find('a').attr('alt') + e);
+        }
+      }
+
+    };
+
+    http.get(s.burl + '/site/search/?query=' + q, {cache: cache_req}).
+      then( r => {
+        let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
+        d.body.innerHTML = r.data;
+        scrape(d);         
+
+      });
+  },  
+
+  gamesq8: (http, prds, slider, q)=>{
+
+    let s = sites.find(x=>(x.site=='gamesq8')) ;
+
+    let scrape = (x)=>{
+      let items = $(x.body.children).find('.product-container');
+      for (let i = 0; i < items.length; i++) {
+        try {
+          let prd = {
+              site: s.site,
+              product: $(items[i]).find('.product-image-container').children('a').attr('title'),
+              href: $(items[i]).find('.product-image-container').children('a').attr('href').split(/[?#]/)[0],
+              image_tn: $(items[i]).find('.product-image-container').find('img').attr('src'),
+              price: Number($(items[i]).find('.product-price').html().trim().split(/ /)[0].trim()),
+              stock: $(items[i]).find(' .out-of-stock').html() === null ? 1 : 0 ,
+              show: true
+          };
+          prds.push(prd);
+          setMinMax(slider,prd);
+        } catch (e) {
+          console.log(i + $(items[i]).find('.product-image-container').children('a').attr('title') + e);
+        }
+      }
+
+    };
+
+    http.get(s.burl + '/en/search?controller=search&orderby=position&orderway=desc&search_query='+q+'&submit_search=', {cache: cache_req}).
+      then( r => {
+        let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
+        d.body.innerHTML = r.data;
+        scrape(d);         
+
+      });
+  },  
+
+  beidounonline: (http, prds, slider, q)=>{
+
+    let s = sites.find(x=>(x.site=='beidounonline')) ;
+
+    let scrape = (x)=>{
+      let items = $(x.body.children).find('.product-container');
+      for (let i = 0; i < items.length; i++) {
+        try {
+          let prd = {
+              site: s.site,
+              product: $(items[i]).find('img').attr('alt'),
+              href: s.burl + '/' + $(items[i]).$(this).find('a').attr('href').split(/[?#]/)[0],
+              image_tn: s.burl +  $(items[i]).find('img').attr('src'),
+              price: Number($(this).find('.cost').html().trim().split(/ /)[0].trim()),
+              stock: 1 ,
+              show: true
+          };
+          prds.push(prd);
+          setMinMax(slider,prd);
+        } catch (e) {
+          console.log(i + $(items[i]).find('img').attr('alt') + e);
+        }
+      }
+
+    };
+
+    http.get(s.burl + '/search.aspx?text=' + q, {cache: cache_req}).
+      then( r => {
+        let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
+        d.body.innerHTML = r.data;
+        scrape(d);         
+
+      });
+  },   
+
+  bestkw: (http, prds, slider, q)=>{
+
+    let s = sites.find(x=>(x.site=='bestkw')) ;
+
+    let scrape = (x)=>{
+      let items = $(x.body.children).find('.product-container');
+      for (let i = 0; i < items.length; i++) {
+        try {
+          let prd = {
+              site: s.site,
+              product: $(items[i]).find('a').find('img').attr('alt'),
+              href: $(items[i]).find('a').attr('href').split(/[?#]/)[0],
+              image_tn: s.burl +  $(items[i]).find('a').find('img').attr('src'),
+              price: Number($(this).find('.offerprice').html().trim().split(/D/)[1].trim()),
+              stock: 1 ,
+              show: true
+          };
+          prds.push(prd);
+          setMinMax(slider,prd);
+        } catch (e) {
+          console.log(i + $(items[i]).find('img').attr('alt') + e);
+        }
+      }
+
+    };
+
+    http.get(s.burl + '/webapp/wcs/stores/servlet/SearchDisplay?storeId=10001&catalogId=10101&langId=-1&pageSize=16&beginIndex=0&searchSource=Q&sType=SimpleSearch&resultCatEntryType=2&showResultsPage=true&pageView=image&searchTerm='+q, {cache: cache_req}).
+      then( r => {
+        let d = document.implementation.createHTMLDocument('xSearch_'+s.site);
+        d.body.innerHTML = r.data;
+        scrape(d);         
+
+      });
+  },  
+
 
 
 

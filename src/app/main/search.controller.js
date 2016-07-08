@@ -78,6 +78,13 @@ export class SearchController {
     return this.prds.reduce((p,c)=>(p.price<=c.price?p.price:c.price)) ;
   }  
 
+/*  match(q){
+    return function( item ) {
+      console.log(item);
+      return (String(item).indexOf(q) > -1);
+    };
+  }*/
+
 
 
   
