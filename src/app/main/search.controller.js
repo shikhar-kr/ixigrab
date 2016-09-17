@@ -8,6 +8,7 @@ export class SearchController {
     this.xCurrency = xCurrency ;
     this.xSearch = xSearch ;
     this.location = $location ;
+    this.routeParams = $routeParams ;
     this.q = $routeParams.q;
     this.cors = null ;
     
@@ -53,13 +54,12 @@ export class SearchController {
 
   doSearch() {
 
-    let {prds,prdsCount,xSites,slider,http,log,xCurrency,xSearch,q,location} = this ;
-    
+    let {prds,prdsCount,xSites,slider,http,log,xCurrency,xSearch,q,location,routeParams} = this ;
+        
+    prds.splice(0) ; // reset
     xSites.forEach(s=>{
       //log.debug(s.site);
       xSearch[s.site](http,prds,slider,q) ;
-
-      
     	
     }) ; 
 
