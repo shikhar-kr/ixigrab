@@ -9,6 +9,18 @@ export class SearchController {
     this.xSearch = xSearch ;
     this.location = $location ;
     this.q = $routeParams.q;
+    this.cors = null ;
+    
+    $http.get( 'http://example.com/').
+    then( r => {
+      console.log(r.status);
+      if(r.status == 200){
+        this.cors = true ;
+      } else {
+        this.cors = false ;
+      }
+  
+    }); 
     
     this.prds = [] ; // products
     this.bgColor = {};

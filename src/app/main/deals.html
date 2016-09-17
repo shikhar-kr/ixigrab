@@ -1,4 +1,16 @@
-<div class="container-fluid">
+<div class="container" ng-if="!search.cors">  
+  <div class="row">
+    <p class="bg-danger">Your browser does not support Cross-origin resource sharing(CORS)</p>
+    This app requires CORS support.
+    You can enable CORS by 
+    <ul>
+      <li>Using this chrome addon <a target="_blank" href="https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi">Allow-Control-Allow-Origin: *</a> </li>
+      <li>Running chrome with security disabled <code>chrome.exe --user-data-dir="C:/Temp/Chrome" --disable-web-security </code></li>
+    </ul>
+    </div>
+</div>
+
+<div class="container-fluid" ng-if="search.cors">
 
 <nav class="navbar navbar-static-top navbar-inverse">
   <div class="container-fluid">

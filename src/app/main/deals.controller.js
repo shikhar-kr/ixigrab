@@ -9,6 +9,18 @@ export class DealsController {
     this.xGetDeals = xGetDeals ;
     this.prds = [] ; // products
     this.bgColor = {};
+    this.cors = null ;
+    
+    $http.get( 'http://example.com/').
+    then( r => {
+      console.log(r.status);
+      if(r.status == 200){
+        this.cors = true ;
+      } else {
+        this.cors = false ;
+      }
+  
+    });      
     this.slider = {
       min: null,
       max: null,
