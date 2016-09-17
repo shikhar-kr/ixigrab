@@ -1,0 +1,33 @@
+<div class="container">
+  <p></p>
+
+  <div class="row jumbotron text-center">
+    <h1>IXIGRAB</h1>
+    <p class="lead">      
+      Your personal ecommerce search aggregator.
+    </p>
+  </div>
+
+  <div class="row" ng-if="home.cors">
+    <p class="bg-success">Great ! Your browser supports Cross-origin resource sharing(CORS)</p>
+    <p class="text-center"><a class="btn btn-success" href="#/deals">Browse today's deals or Search a product</a></p>
+  </div>
+    
+  <div class="row" ng-if="!home.cors">
+  <p class="bg-danger">Your browser does not support Cross-origin resource sharing(CORS)</p>
+  This app requires CORS support.
+  You can enable CORS by 
+  <ul>
+    <li>Using this chrome addon <a target="_blank" href="https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi">Allow-Control-Allow-Origin: *</a> </li>
+    <li>Running chrome with security disabled <code>chrome.exe --user-data-dir="C:/Temp/Chrome" --disable-web-security </code></li>
+  </ul>
+  </div>
+
+  <div class="row">
+    <p class="bg-success">This is an opensource app, you can see the code at <a target="_blank" href="https://github.com/shikhar-kr/ixigrab">Gihub repository link</a></p>
+  </div>
+  
+
+
+
+</div>

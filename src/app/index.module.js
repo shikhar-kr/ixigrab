@@ -10,6 +10,7 @@ import { xSearch } from './sites.config';
 import { routerConfig } from './index.route';
 import { runBlock } from './index.run';
 import { MainController } from './main/main.controller';
+import { HomeController } from './main/home.controller';
 import { DealsController } from './main/deals.controller';
 import { SearchController } from './main/search.controller';
 import { GithubContributorService } from '../app/components/githubContributor/githubContributor.service';
@@ -32,6 +33,7 @@ angular.module('ixigrab', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'n
   .service('githubContributor', GithubContributorService)
   .service('webDevTec', WebDevTecService)
   .controller('MainController', MainController)
+  .controller('HomeController', HomeController)
   .controller('DealsController', DealsController)
   .controller('SearchController', SearchController)
   .directive('acmeNavbar', NavbarDirective)
