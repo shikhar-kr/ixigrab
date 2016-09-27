@@ -21,7 +21,7 @@ export class DealsController {
       }
   
     });      
-    this.slider = {
+/*    this.slider = {
       min: null,
       max: null,
       options: {
@@ -38,7 +38,7 @@ export class DealsController {
           });
         }
       }
-    };
+    };*/
 
     this.xSites.forEach(x=>{
       this.bgColor[x.site] = x.color ;

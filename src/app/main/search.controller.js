@@ -25,7 +25,7 @@ export class SearchController {
     
     this.prds = [] ; // products
     this.bgColor = {};
-    this.slider = {
+/*    this.slider = {
       min: null,
       max: null,
       options: {
@@ -42,7 +42,7 @@ export class SearchController {
           });
         }
       }
-    };
+    };*/
 
     this.xSites.forEach(x=>{
       this.bgColor[x.site] = x.color ;
