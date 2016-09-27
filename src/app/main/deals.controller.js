@@ -1,5 +1,5 @@
 export class DealsController {
-  constructor ($log, $http, xConfig, xSites, xCurrency, xDecimals, xGetDeals) {
+  constructor ($log, $http, xConfig, xSites, xCurrency, xDecimals, xGetDeals, $location, $routeParams) {
     'ngInject';
     
     this.log = $log ;
@@ -7,6 +7,8 @@ export class DealsController {
     this.xSites = xSites.filter(x=>x.deals) ;
     this.xCurrency = xCurrency ;
     this.xGetDeals = xGetDeals ;
+    this.location = $location ;
+    this.routeParams = $routeParams ;
     this.prds = [] ; // products
     this.bgColor = {};
     this.cors = null ;
@@ -61,6 +63,14 @@ export class DealsController {
       //log.debug(prds);
     	
     }) ; 
+
+  }
+
+  doDirect() {
+    console.log('here') ;
+    let {location} = this ;
+
+    location.path('/search/'+this.q);
 
   }
 
