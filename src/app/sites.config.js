@@ -198,25 +198,26 @@ export var xGetDeals = {
     let s = sites.find(x=>(x.site=='blink')) ;
 
     let scrape = (x)=>{
-      let items = $(x.body.children).find('.dealcenterContainer');
+      let items = $(x.body.children).find('.dealLeftcontainer'); 
       //let prds = [];
-      for (let i = 0; i < items.length; i++) {
+      //for (let i = 0; i < items.length; i++) {
         try {
           let prd = {
               site: s.site,
-              product: $(items[i]).find('.dodProducttitle').find('a').text().trim(),
-              href: s.burl + $(items[i]).children('a').attr('href').split(/[?#]/)[0],
-              image_tn: s.burl + $(items[i]).children('a').children('img').attr('src'),
-              price: Number($(items[i]).find(' .price').html().split(/ /)[0]),
-              stock: $(items[i]).find(' .outStock').html() === null ? 1 : 0,
+              product: items.find('.dodProducttitle').find('a').text().trim(),
+              href: s.burl + items.find('a').attr('href').split(/[?#]/)[0],
+              image_tn: s.burl + $(x.body.children).find('.dealRightcontainer').find('img').attr('src'),
+              price: Number(items.find('.dodPrice').text().split(/ /)[1]),
+              //stock: items.find(' .outStock').html() === null ? 1 : 0,
+              stock: 1,
               show: true
           };
           prds.push(prd);
           setMinMax(slider,prd);
         } catch (e) {
-          console.log(i + $(items[i]).find('.dodProducttitle').find('a').text().trim() + e);
+          console.log(e);
         }
-      }
+      //}
     };
 
     http.get(s.burl + '/deals', {cache: cache_req}).
