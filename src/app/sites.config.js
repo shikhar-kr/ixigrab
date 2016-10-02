@@ -163,7 +163,7 @@ let scrape_xcite = function(x,s,prds,slider){
           show: true
       };
       prds.push(prd);
-      setMinMax(slider,prd);
+      //setMinMax(slider,prd);
       
     } catch (e) {
         console.log(i + $(items[i]).find('.product-image').attr('title') + e);
@@ -213,7 +213,7 @@ export var xGetDeals = {
               show: true
           };
           prds.push(prd);
-          setMinMax(slider,prd);
+          //setMinMax(slider,prd);
         } catch (e) {
           console.log(e);
         }
@@ -246,7 +246,7 @@ export var xGetDeals = {
             show: true
         };
         prds.push(prd);
-        setMinMax(slider,prd);
+        //setMinMax(slider,prd);
       } catch (e) {
         console.log(i + $(x.body.children).find('.fullWhiteWidget .productDescription h3').text().trim() + e);
       }
@@ -277,7 +277,7 @@ export var xGetDeals = {
             show: true
         };
         prds.push(prd);
-        setMinMax(slider,prd);
+        //setMinMax(slider,prd);
       } catch (e) {
         console.log(i + $(x.body.children).find('.product-view .product-name').text().trim() + e);
       }
@@ -331,7 +331,7 @@ export var xSearch = {
               show: true
           };
           prds.push(prd);
-          setMinMax(slider,prd);
+          //setMinMax(slider,prd);
         } catch (e) {
           console.log(i + $(items[i]).children('a').children('img').attr('alt') + e);
         }
@@ -366,7 +366,7 @@ export var xSearch = {
               show: true
           };
           prds.push(prd);
-          setMinMax(slider,prd);
+          //setMinMax(slider,prd);
         } catch (e) {
           console.log(i + $(items[i]).find('.title').children('a').attr('title') + e);
         }
@@ -401,7 +401,7 @@ export var xSearch = {
               show: true
           };
           prds.push(prd);
-          setMinMax(slider,prd);
+          //setMinMax(slider,prd);
         } catch (e) {
           console.log(i + $(items[i]).find('.itemLink').attr('title').trim() + e);
         }
@@ -436,7 +436,7 @@ export var xSearch = {
               show: true
           };
           prds.push(prd);
-          setMinMax(slider,prd);
+          //setMinMax(slider,prd);
         } catch (e) {
           console.log(i + $(items[i]).find('.product-title').attr('title') + e);
         }
@@ -471,7 +471,7 @@ export var xSearch = {
               show: true
           };
           prds.push(prd);
-          setMinMax(slider,prd);
+          //setMinMax(slider,prd);
         } catch (e) {
           console.log(i + $(items[i]).find('.product-image').attr('title') + e);
         }
@@ -506,7 +506,7 @@ export var xSearch = {
               show: true
           };
           prds.push(prd);
-          setMinMax(slider,prd);
+          //setMinMax(slider,prd);
         } catch (e) {
           console.log(i + $(items[i]).find('.product-image').children('a').attr('title') + e);
         }
@@ -541,7 +541,7 @@ export var xSearch = {
               show: true
           };
           prds.push(prd);
-          setMinMax(slider,prd);
+          //setMinMax(slider,prd);
         } catch (e) {
           console.log(i + $(items[i]).find('a').attr('alt') + e);
         }
@@ -576,7 +576,7 @@ export var xSearch = {
               show: true
           };
           prds.push(prd);
-          setMinMax(slider,prd);
+          //setMinMax(slider,prd);
         } catch (e) {
           console.log(i + $(items[i]).find('.product-image-container').children('a').attr('title') + e);
         }
@@ -611,7 +611,7 @@ export var xSearch = {
               show: true
           };
           prds.push(prd);
-          setMinMax(slider,prd);
+          //setMinMax(slider,prd);
         } catch (e) {
           console.log(i + $(items[i]).find('img').attr('alt') + e);
         }
@@ -646,7 +646,7 @@ export var xSearch = {
               show: true
           };
           prds.push(prd);
-          setMinMax(slider,prd);
+          //setMinMax(slider,prd);
         } catch (e) {
           console.log(i + $(items[i]).find('img').attr('alt') + e);
         }
