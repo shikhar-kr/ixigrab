@@ -10,7 +10,11 @@ You can git clone this app and use it on your desktop or you can use it from [ix
 
 # Screenshots
 
+##Deals
+
 ![Daily Deals](https://github.com/shikhar-kr/ixigrab/blob/master/ixigrab_deals_ss.jpg "Daily deals")
+
+##Search
 
 ![Search](https://github.com/shikhar-kr/ixigrab/blob/master/ixigrab_search_ss.jpg "Search")
 
