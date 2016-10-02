@@ -10,6 +10,7 @@ export class SearchController {
     this.location = $location ;
     this.routeParams = $routeParams ;
     this.q = $routeParams.q;
+    //this.sq = null ;
     this.cors = null ;
     
     $http.get( 'http://example.com/').
@@ -57,6 +58,7 @@ export class SearchController {
     let {prds,prdsCount,xSites,slider,http,log,xCurrency,xSearch,q,location,routeParams} = this ;
         
     prds.splice(0) ; // reset
+    this.sq = '' ;
     xSites.forEach(s=>{
       //log.debug(s.site);
       xSearch[s.site](http,prds,slider,q) ;
