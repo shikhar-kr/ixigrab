@@ -18,4 +18,6 @@ You can git clone this app and use it on your desktop or you can use it from [ix
 
 ![Search](https://github.com/shikhar-kr/ixigrab/blob/master/ixigrab_search_ss.jpg "Search")
 
+#Screencast
 
+[IXIGRAB usage](https://youtu.be/hhsMx_qSKDQ)
